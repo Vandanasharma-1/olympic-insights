@@ -97,7 +97,8 @@ if user_menu=='Overall Analysis':
 
     
     events_over_time = helper.data_over_time(df, 'Event')
-    fig = px.line(events_over_time, x="Edition", y="Event")
+    fig = px.line(events_over_time, x="Year", y="Event")
+
     st.title("Events over the years")
     st.plotly_chart(fig)
 
