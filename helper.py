@@ -46,7 +46,8 @@ def country_year_list(df):
 
 def data_over_time(df,col):
     nations_over_time = df.drop_duplicates(['Year', col])['Year'].value_counts().sort_index()
-    nations_over_time.rename(columns={'index': 'Edition', 'Year': col}, inplace=True)
+    #nations_over_time.rename(columns={'index': 'Edition', 'Year': col}, inplace=True)
+    nations_over_time.rename({'index': 'Edition', 'Year': col}, inplace=True)
 
     return nations_over_time
 
