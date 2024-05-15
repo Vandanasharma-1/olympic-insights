@@ -57,16 +57,21 @@ def most_successful(df, sport):
     if sport != 'Overall':
         temp_df = temp_df[temp_df['Sport'] == sport]
 
-    temp_df_counts = temp_df['Name'].value_counts().reset_index()
+    temp_df_counts = temp_df['Name'].value_counts().reset_index()  # Resetting index
 
-    temp_df_counts['index'] = temp_df_counts['index'].astype(str)
+    # Convert the index to a string type
+    temp_df_counts.index = temp_df_counts.index.astype(str)
 
-    merged_df = pd.merge(temp_df_counts.head(15), df, left_on='index', right_on='Name', how='left')
+    # You can access the index column directly
+    temp_df_counts.rename(columns={'index': 'Name', 'Name': 'Medal'}, inplace=True)
 
-    x = merged_df[['index', 'Name_x', 'Sport', 'region']].drop_duplicates('index')
-    x.rename(columns={'index': 'Name', 'Name_x': 'Medal'}, inplace=True)
+    merged_df = pd.merge(temp_df_counts.head(15), df, left_on='Name', right_on='Name', how='left')
+
+    x = merged_df[['Name', 'Medal', 'Sport', 'region']].drop_duplicates('Name')
+    x.rename(columns={'Name': 'index', 'index': 'Name', 'Medal': 'Name_x'}, inplace=True)
 
     return x
+
 
 
 def yearwise_medal_tally(df,country):
