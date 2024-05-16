@@ -57,10 +57,15 @@ def most_successful(df, sport):
     if sport != 'Overall':
         temp_df = temp_df[temp_df['Sport'] == sport]
 
-    x = temp_df['Name'].value_counts().reset_index().head(15).merge(df, left_on='index', right_on='Name', how='left')[
-        ['index', 'Name_x', 'Sport', 'region']].drop_duplicates('index')
-    x.rename(columns={'index': 'Name', 'Name_x': 'Medals'}, inplace=True)
-    return x
+    # Ensure the 'index' column is correctly created
+    top_athletes = temp_df['Name'].value_counts().reset_index().head(15)
+    top_athletes.columns = ['Name', 'Medals']  # Rename columns to match the merge operation
+
+    # Merge with original DataFrame to get additional information
+    merged_df = top_athletes.merge(df, left_on='Name', right_on='Name', how='left')
+    result = merged_df[['Name', 'Medals', 'Sport', 'region']].drop_duplicates('Name')
+    return result
+
 
 
 
