@@ -79,10 +79,10 @@ if user_menu=='Overall Analysis':
 
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.header("Editions")
+        st.header("Events")
         st.title(events)
     with col2:
-        st.header("Hosts")
+        st.header("Nations")
         st.title(nations)
     with col3:
         st.header("Athletes")
